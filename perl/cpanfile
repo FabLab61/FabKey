@@ -1,0 +1,4 @@
+requires 'Device::SerialPort';
+requires 'DBI';
+requires 'DBD::SQLite';
+requires 'Data::Dumper';
