@@ -3,6 +3,7 @@ use feature 'say';
 use Data::Dumper;
 use DBI;
 use DBD::SQLite;
+use WWW::Telegram::BotAPI;
 
 my $dbh = DBI->connect('dbi:SQLite:dbname=skud.db',"","");
 my $port = Device::SerialPort->new("/dev/ttyUSB1");
@@ -14,9 +15,16 @@ $port->parity("none");
 $port->stopbits(1);
 $port->write_settings;
 
-
 my $h = {};
 my $res = {};
+
+
+my $id_to = 218718957;
+my $api = WWW::Telegram::BotAPI->new (
+    token => ''
+);
+
+
 
 while (1) {
   my $string = $port->lookfor();
@@ -43,6 +51,7 @@ while (1) {
  		say "pin:".$1;
  		if ($res->{pin} == $1) {
  			$port->write("o");
+ 			log_telegram($res);
  			$res = {};
  			$h = {}
  		} 
@@ -58,4 +67,9 @@ sub is_user_in_db {
 	$sth->execute($card_id);
 	my $hash_ref = $sth->fetchrow_hashref;
 	return $hash_ref;
+}
+
+sub log_telegram {
+	my $res = shift;
+	$api->sendMessage ({chat_id => $id_to,text => 'Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.') вошёл'});
 }
