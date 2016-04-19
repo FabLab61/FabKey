@@ -1,14 +1,27 @@
 # FabKey
 
-Completely opensource Arduino-based access control system. 
-Support Wiegand26 reader with keypad (like Smartec ST-PR160EK)
-Based on software Ardiuno interrupts and timers. Backend is based on Perl
+Completely opensource Arduino-based access control system for FabLabs/Hackerspaces/any public space wants
+cheap access control
+Support Wiegand readers with keypad too (like Smartec ST-PR160EK)
+Based on software Ardiuno interrupts and timers. 
+Easy control it via web browser or Telegram bot
+Backend is based on Perl.
 
-Features:
+## Features
+
 * Two Wiegand readers: one with keypad for entrance and one without keypad for exit
-* Support of 7 and 8 bit keypad code both
-* Email and Telegram notifications
+* One door relay
+* Multiple pins for alarms
+* Support of 7 and 8 bit 
+* keypad code both (universal way of detecting end of transmission)
+* Email or(and) Telegram notifications and alarms
 * Universal (tested at Arduino Duemilanove + OrangePi but can work with any Arduino and single board linux computer)
 * highly configurable code
 
-https://forum.arduino.cc/index.php?topic=391896.0
+## Possible configuration  
+
+1. Single-board computer only. Use pigpio or WiringPi libraties for working with Wiegand protocol and control relays. This comfiguration strongly needs optoisolation cause diodes can't save SoC from damage by static electricity from Wiegand readers.
+2. Arduino-only (Arduino Yun or Arduino Uno + Ethernet shield).
+3. Single-board computer + Arduino or Arduino-based board. Database of users can be stored in Arduino (if not so much users) or in single-board computer.
+
+For more information please check [wiki](https://github.com/FabLab61/FabKey/wiki)
