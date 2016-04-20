@@ -5,6 +5,7 @@ use DBI;
 use DBD::SQLite;
 use WWW::Telegram::BotAPI;
 
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 my $dbh = DBI->connect('dbi:SQLite:dbname=skud.db',"","");
 my $port = Device::SerialPort->new("/dev/ttyUSB1");
 
@@ -42,7 +43,9 @@ while (1) {
  		if ($h->{reader_where} eq "Exitway") {
  			$res = is_user_in_db($h->{card_id});
  			if (defined $res) {
+ 				$res->{suffix} = "ВЫХОД";
  				$port->write("o"); # open door
+ 				log_telegram($res);
  			}
  		}
  	}
@@ -51,6 +54,7 @@ while (1) {
  		say "pin:".$1;
  		if ($res->{pin} == $1) {
  			$port->write("o");
+ 			$res->{suffix} = "ВХОД";
  			log_telegram($res);
  			$res = {};
  			$h = {}
@@ -71,5 +75,5 @@ sub is_user_in_db {
 
 sub log_telegram {
 	my $res = shift;
-	$api->sendMessage ({chat_id => $id_to,text => 'Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.') вошёл'});
+	$api->sendMessage ({chat_id => $id_to,text => $res->{suffix}.'. Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.')'});
 }
