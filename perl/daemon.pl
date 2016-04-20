@@ -20,7 +20,7 @@ my $h = {};
 my $res = {};
 
 
-my $id_to = 218718957;
+my @ids_to = (218718957,103270583);
 my $api = WWW::Telegram::BotAPI->new (
     token => ''
 );
@@ -44,7 +44,7 @@ while (1) {
  			$res = is_user_in_db($h->{card_id});
  			if (defined $res) {
  				$res->{suffix} = "ВЫХОД";
- 				$port->write("o"); # open door
+ 				#$port->write("o"); # open door. you can comment it if in hardware allowed any card for exit
  				log_telegram($res);
  			}
  		}
@@ -75,5 +75,7 @@ sub is_user_in_db {
 
 sub log_telegram {
 	my $res = shift;
-	$api->sendMessage ({chat_id => $id_to,text => $res->{suffix}.'. Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.')'});
+	for (@ids_to) {
+		$api->sendMessage ({chat_id => $_,text => $res->{suffix}.'. Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.')'});
+	}
 }
