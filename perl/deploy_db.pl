@@ -16,7 +16,9 @@ CREATE TABLE log (
     reader_id INTEGER,
     code INTEGER,
     code_type VARCHAR(4),
-    user_id INTEGER
+    user_id INTEGER,
+    telegram_id INTEGER,
+    is_blocked INTEGER
     )
 END_SQL
 	$dbh->do($sql);

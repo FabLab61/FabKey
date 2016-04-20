@@ -25,3 +25,29 @@ Backend is based on Perl.
 3. Single-board computer + Arduino or Arduino-based board. Database of users can be stored in Arduino (if not so much users) or in single-board computer.
 
 For more information please check [wiki](https://github.com/FabLab61/FabKey/wiki)
+
+## Database structure
+
+```
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created DEFAULT CURRENT_TIMESTAMP,
+    card_id INTEGER,
+    pin INTEGER,
+    name VARCHAR(160),
+    surname VARCHAR(160),
+    email VARCHAR(160),
+    phone VARCHAR(12),
+    telegram_id INTEGER,
+    is_blocked INTEGER
+    )
+
+CREATE TABLE log (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	time DEFAULT CURRENT_TIMESTAMP,
+    reader_id INTEGER,
+    code INTEGER,
+    code_type VARCHAR(4),
+    user_id INTEGER
+    )
+```
