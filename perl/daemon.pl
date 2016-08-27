@@ -77,6 +77,8 @@ sub is_user_in_db {
 sub log_telegram {
 	my $res = shift;
 	for (@ids_to) {
+		eval {
 		$api->sendMessage ({chat_id => $_,text => $res->{suffix}.'. Пользователь '.$res->{name}.' '.$res->{surname}.' ('.$res->{card_id}.')'});
+		};
 	}
 }
