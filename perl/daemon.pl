@@ -4,6 +4,7 @@ use Data::Dumper;
 use DBI;
 use DBD::SQLite;
 use WWW::Telegram::BotAPI;
+use common::sense;
 
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 my $dbh = DBI->connect('dbi:SQLite:dbname=skud.db',"","");
