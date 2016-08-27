@@ -51,3 +51,7 @@ CREATE TABLE log (
     user_id INTEGER
     )
 ```
+
+## Installation
+
+Check the [wiki](https://github.com/FabLab61/FabKey/wiki)
